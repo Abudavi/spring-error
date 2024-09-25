@@ -1,10 +1,13 @@
 package com.david.spring.error.spring_error.controllers;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -38,6 +41,34 @@ public class HandlerExceptionController {
 
         return ResponseEntity.status(404).body(error);
 
+    }
+    /*
+     * @ExceptionHandler(NumberFormatException.class)
+     * public ResponseEntity<Error> numberformat(NumberFormatException e) {
+     * 
+     * Error error = new Error();
+     * error.setDate(new Date());
+     * error.setError("No se puede trasformar el string a numero");
+     * error.setMessage(e.getMessage());
+     * error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+     * 
+     * return
+     * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value()).body(error);
+     * 
+     * }
+     */
+
+    @ExceptionHandler(NumberFormatException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> numberFormatException(Exception e) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("date", new Date().toString());
+        error.put("Error", "Numero incorrecto, no tiene formato de digito");
+        error.put("Message", e.getMessage());
+        error.put("Status", Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+
+        return error;
     }
 
 }
