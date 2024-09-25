@@ -12,7 +12,7 @@ public class AppController {
     public String index() {
 
         int vaulue = 100 / 0;
-
+        System.out.println(vaulue);
         return "ok 200";
     }
 
