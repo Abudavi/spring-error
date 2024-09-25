@@ -11,7 +11,8 @@ public class AppController {
     @GetMapping("/app")
     public String index() {
 
-        int vaulue = 100 / 0;
+        // int vaulue = 100 / 0;
+        int vaulue = Integer.parseInt("10X");
         System.out.println(vaulue);
         return "ok 200";
     }
