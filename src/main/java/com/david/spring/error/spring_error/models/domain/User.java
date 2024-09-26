@@ -39,9 +39,14 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getnameRole() {
-        return role.getName();
+    public Role getRole() {
+        return role;
     }
+    /*
+     * public String getnameRole() {
+     * return role.getName();
+     * }
+     */
 
     public void setRole(Role role) {
         this.role = role;

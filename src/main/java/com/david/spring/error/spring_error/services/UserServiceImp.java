@@ -2,6 +2,7 @@ package com.david.spring.error.spring_error.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         User u = null;
         for (User user : users) {
             if (user.getId().equals(id)) {
@@ -35,7 +36,7 @@ public class UserServiceImp implements UserService {
                 break;
             }
         }
-        return u;
+        return Optional.ofNullable(u);
     }
 
 }
