@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.david.spring.error.spring_error.Exceptions.UserNotFoundException;
 import com.david.spring.error.spring_error.models.domain.User;
 import com.david.spring.error.spring_error.services.UserService;
 
@@ -27,6 +28,9 @@ public class AppController {
     @GetMapping("/show/{id}")
     public User show(@PathVariable(name = "id") Long id) {
         User user = service.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException("Error el usuario no existe");
+        }
         System.out.println(user.getName());
         return user;
     }
