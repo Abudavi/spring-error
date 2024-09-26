@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.david.spring.error.spring_error.Exceptions.UserNotFoundException;
 import com.david.spring.error.spring_error.models.Error;
 
 @RestControllerAdvice
@@ -65,6 +67,20 @@ public class HandlerExceptionController {
         Map<String, String> error = new HashMap<>();
         error.put("date", new Date().toString());
         error.put("Error", "Numero incorrecto, no tiene formato de digito");
+        error.put("Message", e.getMessage());
+        error.put("Status", Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+
+        return error;
+    }
+
+    @ExceptionHandler({ NullPointerException.class, HttpMessageNotWritableException.class,
+            UserNotFoundException.class })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> userNotFoundException(Exception e) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("date", new Date().toString());
+        error.put("Error", "Usuario o rol no existe");
         error.put("Message", e.getMessage());
         error.put("Status", Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()));
 
